@@ -8,6 +8,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import states from "../data/states.json";
+import designations from "../data/designations.json";
 
 const styles = {
   header: {
@@ -36,7 +37,8 @@ class Header extends Component {
 
     this.state = {
       searchText: "",
-      stateCode: [""]
+      stateCode: [""],
+      designations: [""]
     };
   }
 
@@ -45,6 +47,11 @@ class Header extends Component {
   };
 
   handleStateCodeChange = event => {
+    // Here, we're making sure that
+    // when "All States" is selected,
+    // it is the only option that is
+    // selected
+
     const defaultStateIndex = event.target.value.indexOf("");
     
     if (defaultStateIndex !== -1 && this.state.stateCode.indexOf("") === -1) {
@@ -56,6 +63,25 @@ class Header extends Component {
     }
 
     this.setState({ stateCode: event.target.value });
+  };
+
+  handleDesignationsChange = event => {
+    // Here, we're making sure that
+    // when "All States" is selected,
+    // it is the only option that is
+    // selected
+
+    const defaultStateIndex = event.target.value.indexOf("");
+    
+    if (defaultStateIndex !== -1 && this.state.designations.indexOf("") === -1) {
+      event.target.value = [""];
+    } else if (defaultStateIndex !== -1 && event.target.value.length > 1) {
+      event.target.value.splice(defaultStateIndex, 1);
+    } else if (defaultStateIndex === -1 && event.target.value.length < 1) {
+      event.target.value.push("");
+    }
+
+    this.setState({ designations: event.target.value });
   };
 
   render = ( props ) => {
@@ -78,18 +104,34 @@ class Header extends Component {
               multiple
               value={this.state.stateCode}
               onChange={this.handleStateCodeChange}
-              inputProps={{
-                name: "age"
-              }}
               style={{ maxWidth: 200 }}
             >
-              <MenuItem key="all" value="">
+              <MenuItem key="allStates" value="">
                 All States
               </MenuItem>
               {
                 states.map(state => (
                   <MenuItem key={state.name} value={state.code}>
                     {state.name}
+                  </MenuItem>
+                ))
+              }
+            </Select>
+          </Paper>
+          <Paper style={{ padding: 13, marginLeft: 10 }}>
+            <Select
+              multiple
+              value={this.state.designations}
+              onChange={this.handleDesignationsChange}
+              style={{ maxWidth: 200 }}
+            >
+              <MenuItem key="allDesignations" value="">
+                All Designations
+              </MenuItem>
+              {
+                designations.map(designation => (
+                  <MenuItem key={designation} value={designation}>
+                    {designation}
                   </MenuItem>
                 ))
               }

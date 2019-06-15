@@ -18,7 +18,7 @@ class App extends Component {
 
   render = () => (
     <div>
-      <Header />
+      <Header handleSearchResults={this.handleSearchResults} />
       <Results parks={this.state.parks} />
     </div>
   )
