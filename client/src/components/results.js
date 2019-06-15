@@ -18,7 +18,7 @@ const Results = (props) => (
       :
         <div>
           <img src={campingImage} alt="Search above for parks" style={{ opacity: 0.9 }} />
-          <Typography variant="h4" component="h2" style={{ textAlign: "center", position: "relative", top: '-7vw', color: "#666", fontWeight: 300, marginBottom: '-7vw' }} >
+          <Typography variant="h4" component="h2" style={{ textAlign: "center", position: "relative", top: "-7vw", color: "#666", fontWeight: 300, marginBottom: "-7vw" }} >
             Search for Parks Above
           </Typography>
         </div>
