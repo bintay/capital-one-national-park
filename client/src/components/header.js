@@ -40,14 +40,16 @@ class Header extends Component {
     };
   }
 
-  handleSearchTextChange = event => {
-    this.setState({ searchText: event.target.searchText });
+  handleSearchTextChange = value => {
+    this.setState({ searchText: value });
   };
 
   handleStateCodeChange = event => {
     const defaultStateIndex = event.target.value.indexOf("");
     
-    if (defaultStateIndex !== -1 && event.target.value.length > 1) {
+    if (defaultStateIndex !== -1 && this.state.stateCode.indexOf("") === -1) {
+      event.target.value = [""];
+    } else if (defaultStateIndex !== -1 && event.target.value.length > 1) {
       event.target.value.splice(defaultStateIndex, 1);
     } else if (defaultStateIndex === -1 && event.target.value.length < 1) {
       event.target.value.push("");
