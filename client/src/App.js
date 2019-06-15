@@ -1,13 +1,27 @@
-import React from 'react';
-import './App.css';
-import Header from './components/header'
+import React, { Component } from "react";
+import "./App.css";
+import Header from "./components/header";
+import Results from "./components/results";
 
-function App() {
-  return (
+class App extends Component {
+  constructor (props) {
+    super(props);
+
+    this.state = {
+      parks: []
+    };
+  }
+
+  handleSearchResults = (results) => {
+    this.setState({ parks: results });
+  }
+
+  render = () => (
     <div>
       <Header />
+      <Results parks={this.state.parks} />
     </div>
-  );
+  )
 }
 
 export default App;

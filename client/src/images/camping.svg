@@ -26,6 +26,9 @@
                     <path d="M1002,1232.8L830.8,1540.9L1173.1,1540.9L1002,1232.8Z" style="fill:rgb(226,140,55);fill-rule:nonzero;"/>
                     <path d="M1002,1232.8L851.5,1540.9L830.8,1540.9L1002,1232.8Z" style="fill:rgb(255,188,105);fill-rule:nonzero;"/>
                     <path d="M1002,1315L1002,1540.9L1039.2,1505.4L1002,1315Z" style="fill:rgb(236,149,54);fill-rule:nonzero;"/>
+                    <g transform="matrix(1.00066,0,0,3.1984,-0.607016,-3387.96)">
+                        <rect x="925.7" y="1540.9" width="76.25" height="4.082" style="fill:rgb(27,66,85);"/>
+                    </g>
                     <path d="M925.7,1540.9L1002,1540.9L1002,1256.1L925.7,1540.9Z" style="fill:rgb(27,66,85);fill-rule:nonzero;"/>
                 </g>
             </g>
