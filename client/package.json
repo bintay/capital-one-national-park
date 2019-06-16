@@ -9,6 +9,7 @@
     "material-ui-search-bar": "^1.0.0-beta.13",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-photo-gallery": "^7.0.2",
     "react-scripts": "3.0.1"
   },
   "scripts": {

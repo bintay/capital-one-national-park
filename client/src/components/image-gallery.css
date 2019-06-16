@@ -1,0 +1,7 @@
+.react-photo-gallery--gallery img {
+   object-fit: cover;
+}
+
+.react-photo-gallery--gallery img:hover {
+   
+}
