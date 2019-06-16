@@ -13,13 +13,23 @@ if (!NATIONAL_PARK_API_KEY) {
 Set up libraries
 */
 
-// set up express & middlewear
+const request = require("request");
+const cors = require("cors");
 const express = require("express");
+
 const app = express();
 const PORT = process.argv[2] || 4000;
 
-// other libraries
-const request = require("request");
+const WHITELIST = new Set(["http://localhost:3000"]);
+app.use(cors({
+   origin: (origin, callback) => {
+      if (WHITELIST.has(origin)) {
+         callback(null, true)
+      } else {
+         callback(new Error("Not allowed by CORS"))
+      }
+   }
+}));
 
 /*
 API proxies
@@ -27,10 +37,11 @@ API proxies
 
 // get the park list on the home page
 app.get("/api/parks", (req, res) => {
+   const PAGE_SIZE = 10;
    const q = req.query.text;
    const stateCode = req.query.states || "";
-   const start = (parseInt(req.query.page) - 1) * 10 || 1;
-   const limit = 20;
+   const start = (parseInt(req.query.page) - 1) * PAGE_SIZE || 1;
+   const limit = PAGE_SIZE - 1; // why do we need to subtract one? Who knows, but this makes it work properly
    const designations = req.query.designations ? req.query.designations.split(",") : [];
 
    const URL = "https://developer.nps.gov/api/v1/parks"
@@ -41,8 +52,9 @@ app.get("/api/parks", (req, res) => {
       || typeof stateCode != "string"
       || typeof start != "number"
       || typeof designations != "object"
-      || !(/^([a-z]{2}(,))*[a-z]{2}$/.test(stateCode) || stateCode == "")) {
+      || !(/^([a-zA-Z]{2}(,))*[a-zA-Z]{2}$/.test(stateCode) || stateCode == "")) {
       res.json({"error": "Invalid request"});
+      return;
    }
 
    // send the request to the national park api
@@ -55,6 +67,28 @@ app.get("/api/parks", (req, res) => {
             designationsSet = new Set(designations);
             body.data = body.data.filter(v => designationsSet.has(v.designation));
          }
+
+         // sort data - if the query is in the name, it's more relevant
+         // if both or either have the query in the name, sort alphabetically
+         body.data = body.data.sort((a, b) => {
+            const name1 = a.name.toLowerCase();
+            const name2 = b.name.toLowerCase();
+            const query = q.toLowerCase();
+
+            if (name1.indexOf(query) !== -1 && name2.indexOf(query) === -1) {
+               return -1;
+            } else if (name1.indexOf(query) === -1 && name2.indexOf(query) !== -1) {
+               return 1;
+            } else {
+               if (name1 < name2) {
+                  return -1;
+               } else if (name1 > name2) {
+                  return 1;
+               } else {
+                  return 0;
+               }
+            }
+         });
 
          res.json(body.data);
       }

@@ -42,8 +42,12 @@ class Header extends Component {
     };
   }
 
+  handleSearchUpdate = () => {
+    this.props.handleSearchUpdate(this.state.searchText, this.state.stateCode, this.state.designations);
+  }
+
   handleSearchTextChange = value => {
-    this.setState({ searchText: value });
+    this.setState({ searchText: value }, this.handleSearchUpdate);
   };
 
   handleStateCodeChange = event => {
@@ -62,7 +66,7 @@ class Header extends Component {
       event.target.value.push("");
     }
 
-    this.setState({ stateCode: event.target.value });
+    this.setState({ stateCode: event.target.value }, this.handleSearchUpdate);
   };
 
   handleDesignationsChange = event => {
@@ -81,7 +85,7 @@ class Header extends Component {
       event.target.value.push("");
     }
 
-    this.setState({ designations: event.target.value });
+    this.setState({ designations: event.target.value }, this.handleSearchUpdate);
   };
 
   render = ( props ) => {

@@ -1,0 +1,17 @@
+.loadingImage, .loadingText {
+   background: #ddd;
+   background: linear-gradient(270deg, #ddd, #e9e9e9, #ddd);
+   background-size: 600% 600%;
+   animation: LoadBackground 2s ease infinite;
+}
+
+.loadingText {
+   border-radius: 5px;
+   margin-bottom: 20px;
+}
+
+@keyframes LoadBackground { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
