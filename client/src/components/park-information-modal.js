@@ -43,7 +43,6 @@ class ParkInformationModal extends Component {
         this.setState({ news: res.data, newsLoading: false });
       });
 
-          
     axios.get(`http://localhost:4000/api/events?parkCode=${this.props.park.parkCode}`)
       .then(res => {
         this.setState({ events: res.data, eventsLoading: false });

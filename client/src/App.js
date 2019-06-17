@@ -29,9 +29,8 @@ class App extends Component {
         .then((res) => {
           // make sure we don't override current data with out-of-date data
           if (timeSent - this.state.lastRequest > 0) {
-            this.setState({ parks: res.data, loading: false });
+            this.setState({ parks: res.data, loading: false, lastRequest: timeSent });
           }
-          this.setState({ lastRequest: timeSent });
         });
     }
   }

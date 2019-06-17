@@ -10,6 +10,7 @@ const Results = (props) => (
       props.loading
       ? <div style={{ marginTop: 120 }}>
           <LoadingParkCard />
+          <LoadingParkCard />
         </div>
       : props.parks && props.parks.length > 0
         ? <div style={{ marginTop: 120 }}>
