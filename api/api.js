@@ -95,20 +95,48 @@ app.get("/api/parks", (req, res) => {
    );
 });
 
-// get alerts
-app.get("/api/alerts", (req, res) => {
+// get articles & news, visitor centers & campgrounds, people & places
+app.get("/api/:first/:second", (req, res) => {
    const parkCode = req.query.parkCode;
+   const limit = 4;
 
-   const URL = "https://developer.nps.gov/api/v1/alerts";
-   const PARAMETERS = `parkCode=${parkCode}&api_key=${NATIONAL_PARK_API_KEY}`;
+   const URL1 = `https://developer.nps.gov/api/v1/${req.params.first}`;
+   const URL2 = `https://developer.nps.gov/api/v1/${req.params.second}`;
+   const PARAMETERS = `parkCode=${parkCode}&api_key=${NATIONAL_PARK_API_KEY}&limit=${limit}`;
 
-   request.get(`${URL}?${PARAMETERS}`,
+   let result = [];
+
+   request.get(`${URL1}?${PARAMETERS}`,
       (err, response, body) => {
          body = JSON.parse(body);
-         res.json(body.data);
+         result = body.data.slice(0, limit / 2); // for some reason, limit doesn't always work
+         request.get(`${URL2}?${PARAMETERS}`,
+            (err, response, body) => {
+               body = JSON.parse(body);
+               result = result.concat(body.data).slice(0, limit);
+               res.json(result);
+            }
+         );
       }
    );
 });
+
+// get events, alerts, etc
+app.get("/api/:type", (req, res) => {
+   const parkCode = req.query.parkCode;
+   const limit = 4;
+
+   const URL = `https://developer.nps.gov/api/v1/${req.params.type}`;
+   const PARAMETERS = `parkCode=${parkCode}&api_key=${NATIONAL_PARK_API_KEY}&limit=${limit}`;
+
+   request.get(`${URL}?${PARAMETERS}`,
+      (err, response, body) => {
+         body = JSON.parse(body)
+         res.json(body.data.slice(0, limit));
+      }
+   );
+});
+
 
 // start the server
 app.listen(PORT, () => {

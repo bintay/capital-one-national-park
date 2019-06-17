@@ -2,7 +2,7 @@ import React from "react";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
+import Button from "@material-ui/core/Button";
 
 const EventsList = (props) => (
   <div>
@@ -21,19 +21,16 @@ const EventsList = (props) => (
                 </Typography>
               </Grid>
               <Grid item xs={6}>
+                { 
+                  v.regresurl.length > 0
+                    ? <Button color="primary" href={v.regresurl} style={{ float: "right" }}>Read More</Button>
+                    : null
+                }
                 <Typography variant="body2" color="textSecondary">
                   When: {(new Date(v.datestart)).toDateString()} from {v.times[0].timestart} to {v.times[0].timeend}
                   <br /> 
                   <br /> 
                   Where: {v.location}
-                  { 
-                    v.regresurl.length > 0
-                      ? <div>
-                        <br />
-                        <Link href={v.regresurl}>Website</Link>
-                        </div>
-                      : null
-                  }
                 </Typography>
               </Grid>
             </Grid>

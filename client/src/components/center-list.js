@@ -2,7 +2,7 @@ import React from "react";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
+import Button from "@material-ui/core/Button";
 
 const CenterList = (props) => (
   <div>
@@ -10,6 +10,11 @@ const CenterList = (props) => (
       props.centers.map(v => (
         <a href={v.url} style={{ textDecoration: "none" }}>
           <Paper elevation={0} style={{ border: "1px solid #ddd", margin: "10px 0", padding: 10 }}>
+            { 
+              v.directionsUrl.length > 0
+                ? <Button color="primary" href={v.directionsUrl} style={{ float: "right" }}>Read More</Button>
+                : null
+            }
             <Typography variant="h5">
               {v.name}
             </Typography>
@@ -23,14 +28,6 @@ const CenterList = (props) => (
                 <Typography variant="body2" color="textSecondary">
                   {/* The data can come back a little messy, so we need to check different properties for the same info */}
                   Directions: {v.directionsInfo || v.directionsOverview || v.directionsoverview}
-                  { 
-                    v.directionsUrl.length > 0
-                      ? <div>
-                        <br />
-                        <Link href={v.directionsUrl}>Website</Link>
-                        </div>
-                      : null
-                  }
                 </Typography>
               </Grid>
             </Grid>

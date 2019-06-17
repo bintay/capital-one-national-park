@@ -37,6 +37,32 @@ class ParkInformationModal extends Component {
       .then(res => {
         this.setState({ alerts: res.data, alertsLoading: false });
       });
+    
+    axios.get(`http://localhost:4000/api/newsreleases/articles?parkCode=${this.props.park.parkCode}`)
+      .then(res => {
+        this.setState({ news: res.data, newsLoading: false });
+      });
+
+          
+    axios.get(`http://localhost:4000/api/events?parkCode=${this.props.park.parkCode}`)
+      .then(res => {
+        this.setState({ events: res.data, eventsLoading: false });
+      });
+    
+    axios.get(`http://localhost:4000/api/visitorcenters/campgrounds?parkCode=${this.props.park.parkCode}`)
+      .then(res => {
+        this.setState({ centers: res.data, centersLoading: false });
+      });
+    
+    axios.get(`http://localhost:4000/api/people/places?parkCode=${this.props.park.parkCode}`)
+      .then(res => {
+        this.setState({ peopleAndPlaces: res.data, peopleAndPlacesLoading: false });
+      });
+    
+    axios.get(`http://localhost:4000/api/lessonplans?parkCode=${this.props.park.parkCode}`)
+      .then(res => {
+        this.setState({ lessons: res.data, lessonsLoading: false });
+      });
   }
 
   render = () => (
@@ -58,19 +84,19 @@ class ParkInformationModal extends Component {
       <Typography variant="h4">
         Articles &amp; News Releases
       </Typography>
-      <NewsList news={this.state.news} />
+      <NewsList news={this.state.news} loading={this.state.newsLoading} />
       <br />
       <br /> 
       <Typography variant="h4">
         Events
       </Typography>
-      <EventsList events={this.state.events} />
+      <EventsList events={this.state.events} loading={this.state.eventsLoading} />
       <br />
       <br />
       <Typography variant="h4">
         Visitor Centers &amp; Campgrounds
       </Typography>
-      <CenterList centers={this.state.centers} />
+      <CenterList centers={this.state.centers} loading={this.state.centersLoading} />
       <br />
       <br />
       <Typography variant="h4">
@@ -78,7 +104,7 @@ class ParkInformationModal extends Component {
       </Typography>
       <br />
       <Gallery photos={
-        this.props.park.images.slice(0, 8).map((v, i) => {
+        this.props.park.images.slice(0, 6).map((v, i) => {
           const aspectRatio = [[3, 2], [2, 3], [1, 1], [4, 3], [5, 8], [1, 1]]
           return {
             src: v.url,
@@ -89,7 +115,12 @@ class ParkInformationModal extends Component {
       } />
       <br />
       <br />
-      <EducationList lessons={this.state.lessons} peopleAndPlaces={this.state.peopleAndPlaces} />
+      <EducationList 
+        lessons={this.state.lessons} 
+        peopleAndPlaces={this.state.peopleAndPlaces} 
+        lessonsLoading={this.state.lessonsLoading} 
+        peopleAndPlacesLoading={this.peopleAndPlacesLoading} 
+      />
     </Paper>
   )
 }
