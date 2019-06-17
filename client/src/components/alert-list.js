@@ -8,7 +8,7 @@ const AlertList = (props) => (
           <Chip 
             color="secondary"
             label={v.title}
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 10, marginTop: 10 }}
             href={v.url}
             component={v.url.length > 0 ? "a" : "div" }
             clickable={v.url.length > 0}

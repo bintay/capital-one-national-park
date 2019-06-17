@@ -15,7 +15,7 @@ const Results = (props) => (
         ? <div style={{ marginTop: 120 }}>
             {
               props.parks.map(park => (
-                <ParkCard park={park} />
+                <ParkCard park={park} onParkClick={props.onParkClick} />
               ))
             }
           </div>

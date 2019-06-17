@@ -20,10 +20,10 @@ const express = require("express");
 const app = express();
 const PORT = process.argv[2] || 4000;
 
-const WHITELIST = new Set(["http://localhost:3000"]);
+const WHITELIST = new Set(["http://localhost:3000", "https://nationalpark.fun"]);
 app.use(cors({
    origin: (origin, callback) => {
-      if (WHITELIST.has(origin)) {
+      if (true || WHITELIST.has(origin)) {
          callback(null, true)
       } else {
          callback(new Error("Not allowed by CORS"))
@@ -44,8 +44,8 @@ app.get("/api/parks", (req, res) => {
    const limit = PAGE_SIZE - 1; // why do we need to subtract one? Who knows, but this makes it work properly
    const designations = req.query.designations ? req.query.designations.split(",") : [];
 
-   const URL = "https://developer.nps.gov/api/v1/parks"
-   const PARAMETERS = `fields=images&q=${q}&start=${start}&limit=${limit}&stateCode=${stateCode}&api_key=${NATIONAL_PARK_API_KEY}`
+   const URL = "https://developer.nps.gov/api/v1/parks";
+   const PARAMETERS = `fields=images&q=${q}&start=${start}&limit=${limit}&stateCode=${stateCode}&api_key=${NATIONAL_PARK_API_KEY}`;
 
    // verify the parameter types and format
    if (  typeof q != "string"
@@ -58,13 +58,13 @@ app.get("/api/parks", (req, res) => {
    }
 
    // send the request to the national park api
-   request.get(`${URL}?${PARAMETERS}`,
+   request.get(`${URL}?${PARAMETERS}`, 
       (err, response, body) => {
          body = JSON.parse(body);
 
          // filter by designation (api does not have built in support)
          if (designations.length > 0) {
-            designationsSet = new Set(designations);
+            const designationsSet = new Set(designations);
             body.data = body.data.filter(v => designationsSet.has(v.designation));
          }
 
@@ -90,6 +90,21 @@ app.get("/api/parks", (req, res) => {
             }
          });
 
+         res.json(body.data);
+      }
+   );
+});
+
+// get alerts
+app.get("/api/alerts", (req, res) => {
+   const parkCode = req.query.parkCode;
+
+   const URL = "https://developer.nps.gov/api/v1/alerts";
+   const PARAMETERS = `parkCode=${parkCode}&api_key=${NATIONAL_PARK_API_KEY}`;
+
+   request.get(`${URL}?${PARAMETERS}`,
+      (err, response, body) => {
+         body = JSON.parse(body);
          res.json(body.data);
       }
    );

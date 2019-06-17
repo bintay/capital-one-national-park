@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 
 const ParkCard = (props) => (
   <Card style={{ width: "80%", minWidth: 300, margin: "0 auto 20px auto" }}>
-    <CardActionArea>
+    <CardActionArea onClick={() => props.onParkClick(props.park)}>
       {
         props.park.images && props.park.images.length > 0
           ? <CardMedia
@@ -29,7 +29,7 @@ const ParkCard = (props) => (
       </CardContent>
     </CardActionArea>
     <CardActions>
-      <Button size="small" color="primary">
+      <Button size="small" color="primary" onClick={() => props.onParkClick(props.park)}>
         Learn More
       </Button>
       {
