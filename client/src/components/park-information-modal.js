@@ -15,6 +15,8 @@ class ParkInformationModal extends Component {
   constructor (props) {
     super(props);
 
+    console.log(props.park)
+
     // temp data
     this.state = {
       alerts: [],
@@ -95,7 +97,7 @@ class ParkInformationModal extends Component {
       <Typography variant="h4">
         Visitor Centers &amp; Campgrounds
       </Typography>
-      <CenterList centers={this.state.centers} loading={this.state.centersLoading} />
+      <CenterList centers={this.state.centers} loading={this.state.centersLoading} park={this.props.park} />
       <br />
       <br />
       <Typography variant="h4">

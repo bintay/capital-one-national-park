@@ -41,7 +41,7 @@ const CenterList = (props) => (
             </Paper>
           </a>
         ))
-    }    
+    }
   </div>
 )
 
