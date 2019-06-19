@@ -35,32 +35,32 @@ class ParkInformationModal extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://134.209.173.108:3000/api/alerts?parkCode=${this.props.park.parkCode}`)
+    axios.get(`http://134.209.173.108/api/alerts?parkCode=${this.props.park.parkCode}`)
       .then(res => {
         this.setState({ alerts: res.data, alertsLoading: false });
       });
     
-    axios.get(`http://134.209.173.108:3000/api/newsreleases/articles?parkCode=${this.props.park.parkCode}`)
+    axios.get(`http://134.209.173.108/api/newsreleases/articles?parkCode=${this.props.park.parkCode}`)
       .then(res => {
         this.setState({ news: res.data, newsLoading: false });
       });
 
-    axios.get(`http://134.209.173.108:3000/api/events?parkCode=${this.props.park.parkCode}`)
+    axios.get(`http://134.209.173.108/api/events?parkCode=${this.props.park.parkCode}`)
       .then(res => {
         this.setState({ events: res.data, eventsLoading: false });
       });
     
-    axios.get(`http://134.209.173.108:3000/api/visitorcenters/campgrounds?parkCode=${this.props.park.parkCode}`)
+    axios.get(`http://134.209.173.108/api/visitorcenters/campgrounds?parkCode=${this.props.park.parkCode}`)
       .then(res => {
         this.setState({ centers: res.data, centersLoading: false });
       });
     
-    axios.get(`http://134.209.173.108:3000/api/people/places?parkCode=${this.props.park.parkCode}`)
+    axios.get(`http://134.209.173.108/api/people/places?parkCode=${this.props.park.parkCode}`)
       .then(res => {
         this.setState({ peopleAndPlaces: res.data, peopleAndPlacesLoading: false });
       });
     
-    axios.get(`http://134.209.173.108:3000/api/lessonplans?parkCode=${this.props.park.parkCode}`)
+    axios.get(`http://134.209.173.108/api/lessonplans?parkCode=${this.props.park.parkCode}`)
       .then(res => {
         this.setState({ lessons: res.data, lessonsLoading: false });
       });
