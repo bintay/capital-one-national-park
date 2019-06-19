@@ -25,7 +25,7 @@ class App extends Component {
     } else {
       const timeSent = new Date(); // keep track of when we sent this to make sure we're up to date and not overriding with old data
       this.setState({ loading: true });
-      axios.get(`http://134.209.173.108/api/parks?text=${text}&states=${states.join(",")}&designations=${designations.join(",")}`)
+      axios.get(`http://134.209.173.108:3000/api/parks?text=${text}&states=${states.join(",")}&designations=${designations.join(",")}`)
         .then((res) => {
           // make sure we don't override current data with out-of-date data
           if (timeSent - this.state.lastRequest > 0) {

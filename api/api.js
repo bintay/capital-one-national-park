@@ -20,7 +20,7 @@ const express = require("express");
 const app = express();
 const PORT = process.argv[2] || 4000;
 
-const WHITELIST = new Set(["http://localhost:3000", "https://nationalpark.fun"]);
+const WHITELIST = new Set(["http://localhost:3000", "https://nationalpark.fun", "http://134.209.173.108"]);
 app.use(cors({
    origin: (origin, callback) => {
       if (true || WHITELIST.has(origin)) {
@@ -30,6 +30,15 @@ app.use(cors({
       }
    }
 }));
+
+/*
+Serve the front end
+*/
+
+app.use(express.static('public'));
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/public/index.html");
+});
 
 /*
 API proxies
